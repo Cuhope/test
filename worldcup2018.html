@@ -39,6 +39,10 @@
     var stadium=new Array;
     var city=new Array;
     var attendance=new Array;
+    var offname=new Array;
+    var weather=new Array;
+    var temp=new Array;
+    var win=new Array;
 var msg = new Object();
 function getData(){
     $.ajax({
@@ -74,8 +78,15 @@ function getData(){
               city[h]=msg[k].Stadium.CityName[0].Description;
               
               attendance[h]=msg[k].Attendance;
-            
 
+              offname[h]=msg[k].Officials["0"].Name["0"].Description;
+              
+              weather[h]=msg[k].Weather.TypeLocalized["0"].Description;
+               
+               temp[h]=msg[k].Weather.Temperature;
+             
+               win[h]=msg[k].Weather.WindSpeed;
+              
                k++;
                x++;
                $('#country').html('');
@@ -98,11 +109,11 @@ $(".loadButton").click(function(e)
   var e=document.getElementById("country");
   var cur=e.options[e.selectedIndex].value;
 
-for(var t=0;t<home.length && attendance.length && city.length && stadium.length;t++){
+for(var t=0;t<home.length && attendance.length && city.length && stadium.length && offname.length && weather.length && temp.length && win.length;t++){
 
   if(cur == home[t] || cur == away[t]){
     
-        document.demo.score.value += home[t]+" "+homescore[t]+"-"+awayscore[t]+" "+away[t]+"("+stadium[t]+"["+city[t]+"]"+"-"+attendance[t]+")"+"\n";
+        document.demo.score.value += home[t]+" "+homescore[t]+"-"+awayscore[t]+" "+away[t]+"("+stadium[t]+"["+city[t]+"]"+"-"+attendance[t]+")"+"\n"+"Referee Name : "+offname[t]+"\n"+"Weather Condition : "+weather[t]+"\n"+"Temperature : "+temp[t]+"\n"+"WindSpeed : "+win[t]+"\n";
     }
   
 }
