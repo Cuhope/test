@@ -15,7 +15,7 @@
                 <select id="country" style="width: 165px; margin-right: 30px;"></select>
             </tr></td>
             <tr><td>
-                <textarea name="score" placeholder=" Show Score" style="width:200px; height:130px;"></textarea>
+                <textarea name="score" placeholder=" Show Score" style="width:500px; height:130px;"></textarea>
             </tr></td>
             <tr><td>
                 <input type="button" value="Dispaly Result"  class="loadButton" name="res"   style="width: 150px; color:red;">
@@ -36,6 +36,9 @@
     var awayscore = new Array;
     var record =  new Array;
     var msg =  new Array;
+    var stadium=new Array;
+    var city=new Array;
+    var attendance=new Array;
 var msg = new Object();
 function getData(){
     $.ajax({
@@ -50,7 +53,8 @@ function getData(){
         
        msg = msgg.Results;
        for(x in msg[k])
-{
+{        
+
            for (var h in msg)
 {
               homescore[h] =msg[k].Home["Score"];
@@ -63,9 +67,15 @@ function getData(){
                  
 
                home[h] =msg[k].Home.TeamName[0].Description;
+               away[h] =msg[k].Away.TeamName[0].Description;
+
+              stadium[h]=msg[k].Stadium.Name[0].Description;
             
-              away[h] =msg[k].Away.TeamName[0].Description;
+              city[h]=msg[k].Stadium.CityName[0].Description;
               
+              attendance[h]=msg[k].Attendance;
+            
+
                k++;
                x++;
                $('#country').html('');
@@ -85,15 +95,18 @@ function getData(){
 }
 $(".loadButton").click(function(e)
 {
-var e=document.getElementById("country");
-var cur=e.options[e.selectedIndex].value;
+  var e=document.getElementById("country");
+  var cur=e.options[e.selectedIndex].value;
 
-for(var t=0;t<home.length;t++){
+for(var t=0;t<home.length && attendance.length && city.length && stadium.length;t++){
 
-  if(cur == home[t] || cur == away[t]){ 
-    document.demo.score.value += home[t]+" "+homescore[t]+"-"+awayscore[t]+" "+away[t]+ "\n";
-  } 
+  if(cur == home[t] || cur == away[t]){
+    
+        document.demo.score.value += home[t]+" "+homescore[t]+"-"+awayscore[t]+" "+away[t]+"("+stadium[t]+"["+city[t]+"]"+"-"+attendance[t]+")"+"\n";
+    }
+  
 }
+
  });
 function remove(arr){
  var uniw=new Array;
